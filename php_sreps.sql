@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 09, 2021 at 12:08 PM
+-- Generation Time: Oct 11, 2021 at 04:25 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.3.23
 
@@ -33,6 +33,13 @@ CREATE TABLE `account` (
   `staff_password` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `account`
+--
+
+INSERT INTO `account` (`staff_id`, `staff_username`, `staff_password`) VALUES
+('1', 'kwc', 'kwc123');
+
 -- --------------------------------------------------------
 
 --
@@ -56,17 +63,7 @@ CREATE TABLE `item` (
   `item_name` varchar(50) NOT NULL,
   `item_description` varchar(255) NOT NULL,
   `item_price` decimal(4,2) NOT NULL,
-  `item_stock` int(3) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `item_category`
---
-
-CREATE TABLE `item_category` (
-  `item_id` char(5) NOT NULL,
+  `item_stock` int(3) UNSIGNED NOT NULL,
   `cat_id` char(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -113,6 +110,13 @@ CREATE TABLE `staff` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+-- Dumping data for table `staff`
+--
+
+INSERT INTO `staff` (`staff_id`, `staff_fname`, `staff_lname`, `staff_dob`, `staff_address`, `staff_phone`, `staff_gender`) VALUES
+('1', 'k', 'wc', '2021-10-07', 'dsadasdasdsadasd', '123423213213', 'U');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -133,13 +137,7 @@ ALTER TABLE `category`
 -- Indexes for table `item`
 --
 ALTER TABLE `item`
-  ADD PRIMARY KEY (`item_id`);
-
---
--- Indexes for table `item_category`
---
-ALTER TABLE `item_category`
-  ADD PRIMARY KEY (`item_id`,`cat_id`),
+  ADD PRIMARY KEY (`item_id`),
   ADD KEY `cat_id` (`cat_id`);
 
 --
@@ -173,11 +171,10 @@ ALTER TABLE `account`
   ADD CONSTRAINT `account_ibfk_1` FOREIGN KEY (`staff_id`) REFERENCES `staff` (`staff_id`);
 
 --
--- Constraints for table `item_category`
+-- Constraints for table `item`
 --
-ALTER TABLE `item_category`
-  ADD CONSTRAINT `item_category_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`),
-  ADD CONSTRAINT `item_category_ibfk_2` FOREIGN KEY (`cat_id`) REFERENCES `category` (`cat_id`);
+ALTER TABLE `item`
+  ADD CONSTRAINT `item_ibfk_1` FOREIGN KEY (`cat_id`) REFERENCES `category` (`cat_id`);
 
 --
 -- Constraints for table `sales`
