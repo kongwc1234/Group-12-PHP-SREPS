@@ -24,13 +24,13 @@
 		<link rel="stylesheet" href="font-awesome-4.7.0\css\font-awesome.min.css">
 	</head>
 	<body>
-		<img class="logo" src="images/logo.png"/>
+		<img class="logo" src="logo.png"/>
 		<h1 id="title">
 			People Health Pharmacy
 		</h1>
 		<div>
-			<ul>
-				<li><a href="login_page.php"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a></li>
+			<ul style="background-color:darkblue" >
+				<li><a href="login_page.php"><i class="fa fa-sign-in" aria-hidden="true" ></i> Login</a></li>
 			</ul>
 		</div>
 		<br>
