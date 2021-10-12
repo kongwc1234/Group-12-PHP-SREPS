@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 11, 2021 at 04:25 PM
+-- Generation Time: Oct 12, 2021 at 05:47 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.3.23
 
@@ -52,6 +52,14 @@ CREATE TABLE `category` (
   `cat_description` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`cat_id`, `cat_name`, `cat_description`) VALUES
+('1', 'pills', 'supplements for the sick people'),
+('2', 'syringe', 'vaccine');
+
 -- --------------------------------------------------------
 
 --
@@ -67,6 +75,14 @@ CREATE TABLE `item` (
   `cat_id` char(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `item`
+--
+
+INSERT INTO `item` (`item_id`, `item_name`, `item_description`, `item_price`, `item_stock`, `cat_id`) VALUES
+('1', 'Viagra', 'Enlarge d', '40.00', 10, '1'),
+('20000', 'AZ', 'covid 19 vaccine', '40.00', 10, '1');
+
 -- --------------------------------------------------------
 
 --
@@ -74,11 +90,19 @@ CREATE TABLE `item` (
 --
 
 CREATE TABLE `sales` (
-  `sales_id` char(5) NOT NULL,
+  `sales_id` mediumint(5) UNSIGNED NOT NULL,
   `staff_id` char(5) NOT NULL,
   `sales_date` date NOT NULL,
   `sales_description` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `sales`
+--
+
+INSERT INTO `sales` (`sales_id`, `staff_id`, `sales_date`, `sales_description`) VALUES
+(5, '1', '2021-10-15', '1212'),
+(6, '1', '2021-10-23', 'helloworld');
 
 -- --------------------------------------------------------
 
@@ -87,7 +111,7 @@ CREATE TABLE `sales` (
 --
 
 CREATE TABLE `sales_item` (
-  `sales_id` char(5) NOT NULL,
+  `sales_id` mediumint(5) UNSIGNED NOT NULL,
   `item_id` char(5) NOT NULL,
   `quantity` int(3) UNSIGNED NOT NULL,
   `quantity_price` decimal(4,2) UNSIGNED NOT NULL
@@ -161,6 +185,22 @@ ALTER TABLE `staff`
   ADD PRIMARY KEY (`staff_id`);
 
 --
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `sales`
+--
+ALTER TABLE `sales`
+  MODIFY `sales_id` mediumint(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `sales_item`
+--
+ALTER TABLE `sales_item`
+  MODIFY `sales_id` mediumint(5) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- Constraints for dumped tables
 --
 
@@ -186,8 +226,8 @@ ALTER TABLE `sales`
 -- Constraints for table `sales_item`
 --
 ALTER TABLE `sales_item`
-  ADD CONSTRAINT `sales_item_ibfk_1` FOREIGN KEY (`sales_id`) REFERENCES `sales` (`sales_id`),
-  ADD CONSTRAINT `sales_item_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`);
+  ADD CONSTRAINT `sales_item_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`),
+  ADD CONSTRAINT `sales_item_ibfk_3` FOREIGN KEY (`sales_id`) REFERENCES `sales` (`sales_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
