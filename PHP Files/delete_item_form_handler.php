@@ -3,7 +3,7 @@
 ?>
 <html>
 	<head>
-		<title>Delete Flight Schedule Details</title>
+		<title>Delete items</title>
 	</head>
 	<body>
 		<?php
