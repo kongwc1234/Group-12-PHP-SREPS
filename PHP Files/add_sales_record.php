@@ -9,15 +9,15 @@
 	$result = mysqli_query($dbc, $sql);
 	$row = mysqli_fetch_assoc($result);
 
-	$sql = "SELECT AUTO_INCREMENT FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'php-sreps' AND   TABLE_NAME   = 'sales'";
+ 
+	$sql = "SELECT * FROM item NATURAL JOIN category ORDER BY cat_id";
 	$result = mysqli_query($dbc, $sql);
-	$row2 = mysqli_fetch_assoc($result); 
-
+	$items = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>
 <html>
 	<head>
 		<title>
-			Add items
+			Add Sales Record
 		</title>
 		<style>
 			input {
@@ -76,8 +76,7 @@
 			?>
 			<br>
 			<hr>
-
-			<table cellpadding="5">
+		<table cellpadding="5">
 				<tr>
 					<td class="fix_table">Sales Date</td>
 				</tr>
@@ -87,6 +86,8 @@
 			</table>
 			<br>
 			<hr>
+			
+
 
 			<table cellpadding="5">
 				<tr>
@@ -96,6 +97,26 @@
 					<td class="fix_table"><input type="text" name="sales_description" required></td>
 				</tr>
 			</table>
+			<h2>Enter Item Quantity</h2>
+			<?php
+			foreach($items as $item){
+
+			echo '<table cellpadding="5">
+				<tr>
+					<td class="fix_table"><b>'.$item["item_name"].' (ID '.$item["item_id"].')</b></td>
+				</tr>
+				<tr>
+					<td class="fix_table"><input type="number" pattern="[0-9]*" min="0" max="'.$item["item_stock"].'" style="width:78%" name="quantity['.$item["item_id"].']" value="0"></td>
+							      <input type="hidden" name="itemid[]" value="'.$item["item_id"].'">
+				</tr>
+			</table>
+			<br>
+ Stock: '.$item["item_stock"].'
+<br>
+<br>
+			<hr>';
+			}
+			?>
 			<br>
 			<input type="submit" value="Submit" name="Submit">
 		</form>
