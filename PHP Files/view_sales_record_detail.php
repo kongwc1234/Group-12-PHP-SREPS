@@ -4,6 +4,14 @@
 	$sql = "SELECT * FROM sales_item WHERE sales_id = '".$_POST['key']."'";
     $result = mysqli_query($dbc, $sql);
 	$row = mysqli_fetch_assoc($result);
+	$sql = "SELECT * FROM sales NATURAL JOIN staff WHERE sales_id = '".$_POST['key']."'";
+	$result = mysqli_query($dbc, $sql);
+	$row2 = mysqli_fetch_assoc($result);
+	$sql = "SELECT * FROM sales_item NATURAL JOIN item WHERE sales_id = '".$_POST['key']."'";
+    $result = mysqli_query($dbc, $sql);
+	$rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+
 ?>
 
 <html>
@@ -39,7 +47,6 @@
 				<li><a href="logout_handler.php"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
 			</ul>
 		</div>
-		<form action="edit_item_form_handler.php" method="post">
 			<h2>View Sales Record</h2>
 			<?php
 			echo '<table cellpadding="5">
@@ -47,44 +54,86 @@
 					<td class="fix_table">Sales ID</td>
 				</tr>
 				<tr>
-					<td class="fix_table"><input type="text" readonly="readonly" name="sales_od" value="'.$row["sales_id"].'" maxlength="5" required></td>
+					<td class="fix_table"><input type="text" readonly="readonly" name="sales_id" value="'.$row2["sales_id"].'" maxlength="5" required></td>
 				</tr>
 			</table>
 			<br>
 			<hr>
-
-			<table cellpadding="5">
-				<tr>
-					<td class="fix_table">Item ID</td>
-				</tr>
-				<tr>
-					<td class="fix_table"><input type="text" name="item_name" value="'.$row["item_id"].'" required></td>
-				</tr>
-			</table>
-			<br>
-			<hr>
-
-			<table cellpadding="5">
-				<tr>
-					<td class="fix_table">Quantity</td>
-				</tr>
-				<tr>
-					<td class="fix_table"><input type="text" name="quantity" value="'.$row["quantity"].'" required></td>
-				</tr>
-			</table>
-			<br>
-			<hr>
-			<table cellpadding="5">
-				<tr>
-					<td class="fix_table">Quantity Price</td>
-				</tr>
-				<tr>
-					<td class="fix_table"><input type="text" name="quantity_price" value="'.$row["quantity_price"].'" required></td>
-				</tr>
-			</table>
 			
-			<input type="submit" value="Submit" name="Submit">
-		</form>';
+			<table cellpadding="5">
+				<tr>
+					<td class="fix_table">Added by:</td>
+				</tr>
+				<tr>
+					<td class="fix_table"><input type="text" readonly="readonly" name="staff_id" value="'.$row2["staff_fname"].' '.$row2["staff_lname"].' ('.$row2["staff_id"].')" maxlength="5" required>
+					</td>
+				</tr>
+			</table>
+			<br>
+			<hr>
+			
+			<table cellpadding="5">
+			<tr>
+					<td class="fix_table">Sales Date</td>
+				</tr>
+				<tr>
+					<td class="fix_table"><input type="text" readonly="readonly" name="sales_date" value="'.$row2["sales_date"].'" maxlength="5" required></td>
+				</tr>
+			</table>
+			<br>
+			<hr>
+			
+			<table cellpadding="5">
+			<tr>
+					<td class="fix_table">Sales Description</td>
+				</tr>
+				<tr>
+					<td class="fix_table"><input type="text" readonly="readonly" name="sales_description" value="'.$row2["sales_description"].'" maxlength="5" required></td>
+				</tr>
+			</table>
+			<br>
+			<hr>
+			
+			<td class = "fix_table"><h2>Item Quantity &emsp; &ensp; Item Quantity Price</h2>';
+			
+			foreach($rows as $row3){
+			echo '<table cellpadding="5">
+				<tr>
+					<td class="fix_table"><b>'.$row3["item_name"].' (ID '.$row3["item_id"].')</b></td>
+				</tr>
+				<tr>
+					<td class="fix_table"><input type="number" readonly="readonly" pattern="[0-9]*" min="0" max="'.$row3["item_stock"].'" style="width:78%" name="quantity['.$row3["item_id"].']" value="'.$row3["quantity"].'"></td>
+							      <input type="hidden" name="itemid[]" value="'.$row3["item_id"].'">
+								  <td class="fix_table">'.$row3["quantity_price"].'</td>
+				</tr>
+			</table>
+			<br>
+					<td class = "fix_table">  &nbsp RM'.$row3["item_price"].' Each </td>
+			<br>
+			<br>
+			<hr>';
+			}
+			$sql = "SELECT SUM(quantity_price) AS total_price FROM sales_item WHERE sales_id = '".$_POST['key']."'";
+			$result = mysqli_query($dbc, $sql);
+			$total_price = mysqli_fetch_assoc($result);
+			echo '<table cellpadding="5">
+				<tr>
+					<td class="fix_table"><b>Total Price</b></td>
+					<td class="fix_table">'.$total_price["total_price"].'</td>
+				</tr>
+			</table>';
 		?>
+		<br>
+		<br>
+		<form method='post' action='edit_sales_record.php'>
+      <input type='submit' name='edit' value='Edit' style="width:20%;margin-left:auto;">
+      <input type='hidden' name='key' value= <?php echo $row2['sales_id']; ?>>
+	  </form>
+
+	<form method='post' action='delete_sales_record_form_handler.php' onsubmit="return confirm('Do you really want to delete this sales record?');"><input type='submit' name='delete_sales_record' value='Delete' style="width:20%;margin-left:auto;">
+      <input type='hidden' name='key' value= <?php echo $row2['sales_id'];  ?>>
+    </form>
+		<form method='post' action='view_sales_record.php'>
+      <input type='submit' class='w3-button w3-khaki' name='view' value='Back' style="width:20%;margin-left:auto">
 	</body>
 </html>
