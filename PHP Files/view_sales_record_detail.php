@@ -48,6 +48,35 @@
 			</ul>
 		</div>
 			<h2>View Sales Record</h2>
+
+			<?php
+				if(isset($_GET['msg']) && $_GET['msg']=='success_delete')
+				{
+					echo "<strong style='color: green'>The sales record has been successfully deleted.</strong>
+						<br>
+						<br>";
+				}
+				else if(isset($_GET['msg']) && $_GET['msg']=='failed_delete')
+				{
+					echo "<strong style='color: red'>*Invalid sales record Details, please enter again.</strong>
+						<br>
+						<br>";
+				}
+
+				if(isset($_GET['msg']) && $_GET['msg']=='success_edit')
+				{
+					echo "<strong style='color: green'>The sales record has been successfully edited.</strong>
+						<br>
+						<br>";
+				}
+				else if(isset($_GET['msg']) && $_GET['msg']=='failed_edit')
+				{
+					echo "<strong style='color: red'>*Invalid sales record Details, please enter again.</strong>
+						<br>
+						<br>";
+				}
+			?>
+
 			<?php
 			echo '<table cellpadding="5">
 				<tr>
