@@ -4,6 +4,11 @@
 	$sql = "SELECT * FROM category";
     $result = mysqli_query($dbc, $sql);
 	$categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+	if (empty($_SESSION) || empty($_SESSION['login_user'])) 
+	{
+		header("Location: login_page.php");
+	}
 ?>
 
 <html>
@@ -50,7 +55,7 @@
 				}
 				else if(isset($_GET['msg']) && $_GET['msg']=='failed')
 				{
-					echo "<strong style='color: red'>*Invalid item Details, please enter again.</strong>
+					echo "<strong style='color: red'>Duplicate ID, please enter again.</strong>
 						<br>
 						<br>";
 				}
@@ -122,7 +127,7 @@
 				</tr>
 			</table>
 			<br>
-			<input type="submit" value="Submit" name="Submit">
+			<input type="submit" value="Submit" name="Submit" style="width:10%;margin-left:auto">
 		</form>
 
 	</body>
