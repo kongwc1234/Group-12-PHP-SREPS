@@ -97,7 +97,6 @@
 					}
 					else{
 						echo "Submit Error";
-						echo mysqli_error();
 						header("location: add_item.php?msg=failed");
 					}
 					
