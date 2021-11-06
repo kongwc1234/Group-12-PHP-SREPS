@@ -11,7 +11,10 @@
     $result = mysqli_query($dbc, $sql);
 	$rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-
+	if (empty($_SESSION) || empty($_SESSION['login_user'])) 
+	{
+		header("Location: login_page.php");
+	}
 ?>
 
 <html>
@@ -154,15 +157,24 @@
 		?>
 		<br>
 		<br>
+
+		  <?php 
+				if ($_SESSION['user_type']==1){
+					
+		?>
 		<form method='post' action='edit_sales_record.php'>
-      <input type='submit' name='edit' value='Edit' style="width:20%;margin-left:auto;">
+      <input type='submit' name='edit' value='Edit' style="width:10%;margin-left:auto">
       <input type='hidden' name='key' value= <?php echo $row2['sales_id']; ?>>
 	  </form>
 
-	<form method='post' action='delete_sales_record_form_handler.php' onsubmit="return confirm('Do you really want to delete this sales record?');"><input type='submit' name='delete_sales_record' value='Delete' style="width:20%;margin-left:auto;">
+	
+	<form method='post' action='delete_sales_record_form_handler.php' onsubmit="return confirm('Do you really want to delete this sales record?');"><input type='submit' name='delete_sales_record' value='Delete' style="width:10%;margin-left:auto">
       <input type='hidden' name='key' value= <?php echo $row2['sales_id'];  ?>>
     </form>
+	<?php
+	}
+	?>
 		<form method='post' action='view_sales_record.php'>
-      <input type='submit' class='w3-button w3-khaki' name='view' value='Back' style="width:20%;margin-left:auto">
+      <input type='submit' class='w3-button w3-khaki' name='view' value='Back' style="width:10%;margin-left:auto">
 	</body>
 </html>
