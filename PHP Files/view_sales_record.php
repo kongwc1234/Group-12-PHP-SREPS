@@ -4,6 +4,11 @@
 	$sql = "SELECT * FROM sales";
 	$result = mysqli_query($dbc, $sql);
 	$rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+	if (empty($_SESSION) || empty($_SESSION['login_user'])) 
+	{
+		header("Location: login_page.php");
+	}
 ?>
 <html>
 	<head>
