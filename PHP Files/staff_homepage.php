@@ -1,5 +1,9 @@
 <?php
 	session_start();
+	if (empty($_SESSION) || empty($_SESSION['login_user']))
+	{
+		header("Location: login_page.php");
+	}
 ?>
 <html>
 	<head>
@@ -24,7 +28,10 @@
 			echo "<h2>Welcome ".$_SESSION['login_user']."</h2>";
 			?>
 		<table cellpadding="5">
+			<?php
+				if ($_SESSION['user_type']==1){
 
+			?>
 			<tr>
 				<td class="admin_func"><a href="add_item.php"><i class="fa fa-plus" aria-hidden="true"></i> Add Items</a>
 				</td>
@@ -34,6 +41,9 @@
 				<td class="admin_func"><a href="view_item.php"><i class="fa fa-edit" aria-hidden="true"></i> View Items</a>
 				</td>
 			</tr>
+			<?php
+			}
+			?>
 
 			<tr>
 				<td class="admin_func"><a href="add_sales_record.php"><i class="fa fa-plus" aria-hidden="true"></i> Add sales record</a>
@@ -45,7 +55,34 @@
 				</td>
 			</tr>
 
-	
+			<?php
+				if ($_SESSION['user_type']==1){
+
+			?>
+			<tr>
+				<td class="admin_func"><a href="view_sales_report.php"><i class="fa fa-edit" aria-hidden="true"></i> View sales report</a>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="admin_func"><a href="compare_sales_report.php"><i class="fa fa-edit" aria-hidden="true"></i> Compare sales report</a>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="admin_func"><a href="predict_monthlysales.php"><i class="fa fa-edit" aria-hidden="true"></i> Predict Monthly Sales</a>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="admin_func"><a href="predict_weeklysales.php"><i class="fa fa-edit" aria-hidden="true"></i> Predict Weekly Sales</a>
+				</td>
+			</tr>
+			<?php
+			}
+			?>
+
+
 
 		</table>
 	</body>
