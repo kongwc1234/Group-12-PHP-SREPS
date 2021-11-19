@@ -9,6 +9,10 @@
 	{
 		header("Location: login_page.php");
 	}
+
+	if ($_SESSION['user_type']==2){
+		header("Location: staff_homepage.php");
+	}
 ?>
 
 <html>
@@ -65,7 +69,7 @@
 					<td class="fix_table">Item ID</td>
 				</tr>
 				<tr>
-					<td class="fix_table"><input type="text" name="item_id" maxlength="5" required></td>
+					<td class="fix_table"><input type="text" disabled name="item_id" maxlength="5" required></td>
 				</tr>
 			</table>
 			<br>

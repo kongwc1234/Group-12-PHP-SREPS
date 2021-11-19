@@ -19,6 +19,7 @@
     			padding: 7px 45px;
     			margin: 0px 60px
 			}
+			
 		</style>
 		<link rel="stylesheet" type="text/css" href="css/style.css"/>
 		<link rel="stylesheet" href="font-awesome-4.7.0\css\font-awesome.min.css">
@@ -55,5 +56,6 @@
 				<input type="submit" name="Login" value="Login">
 			</fieldset>
 		</form>
+
 	</body>
 </html>

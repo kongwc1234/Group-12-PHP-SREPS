@@ -11,14 +11,7 @@
 			if(isset($_POST['Submit']))
 			{
 				$data_missing=array();
-				if(empty($_POST['item_id']))
-				{
-					$data_missing[]='Item ID';
-				}
-				else
-				{
-					$item_id=trim($_POST['item_id']);
-				}
+			
 
 				if(empty($_POST['cat_id']))
 				{
@@ -75,7 +68,7 @@
 
 					if($cnt==1)
 					{
-						$query="INSERT INTO item (item_id,cat_id,item_name,item_description,item_price,item_stock) VALUES ('$item_id','$cat_id','$item_name','$item_description','$item_price','$item_stock')";
+						$query="INSERT INTO item (cat_id,item_name,item_description,item_price,item_stock) VALUES ('$cat_id','$item_name','$item_description','$item_price','$item_stock')";
 						if (mysqli_query($dbc,$query))
 						{
 							$affected_rows=1;
