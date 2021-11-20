@@ -158,6 +158,20 @@
 		<br>
 		<br>
 		<form method='post' action='view_sales_report.php'>
+		<?php
+		if(isset($_POST['start_date'])){
+			echo '<input type="submit" class="w3-button w3-khaki" name="view" value="Back" style="width:10%;margin-left:auto">';
+			?>
+			
+			<input type='hidden' name='start_date' value= <?php echo $_POST['start_date']; ?>>
+	  <input type='hidden' name='end_date' value= <?php echo $_POST['end_date']; ?>>
+			<?php
+		}
+		else{
+		?>
       <input type='submit' class='w3-button w3-khaki' name='view' value='Back' style="width:10%;margin-left:auto">
+	  <?php
+	  }
+	  ?>
 	</body>
 </html>

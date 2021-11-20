@@ -7,9 +7,14 @@
 	$sql = "SELECT * FROM sales_item NATURAL JOIN item WHERE sales_id = '".$_POST['key']."'";
     $result = mysqli_query($dbc, $sql);
 	$rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
-	$sql = "SELECT * FROM item NATURAL JOIN category"; 
+	$sql = "SELECT * FROM item NATURAL JOIN category";
 	$result = mysqli_query($dbc, $sql);
 	$items = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+	if (empty($_SESSION) || empty($_SESSION['login_user']))
+	{
+		header("Location: login_page.php");
+	}
 ?>
 
 <html>
@@ -94,7 +99,7 @@
 			</table>
 			<br>
 			<hr>
-			
+
 
 
 			<table cellpadding="5">
@@ -136,13 +141,11 @@
 			}
 			?>
 			<br>
-			<input type="submit" value="Submit" name="Submit">
+			<input type="submit" value="Submit" name="Submit" style="width:10%;margin-left:auto">
 		</form>
-		<br>
-		<br>
-	
+
 		<form method='post' action='view_sales_record_detail.php'>
-      <input type='submit' class='w3-button w3-khaki' name='view' value='Back' style="width:30%;margin:0 auto">
+      <input type='submit' class='w3-button w3-khaki' name='view' value='Back' style="width:10%;margin-left:auto">
       <input type='hidden' name='key' value= <?php echo $row2['sales_id']; ?>>
 	  </form>
 	</body>

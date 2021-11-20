@@ -3,7 +3,7 @@
 ?>
 <html>
 	<head>
-		<title>Add Item</title>
+		<title>Add Sales Record</title>
 	</head>
 	<body>
 		<?php
@@ -56,20 +56,23 @@
                             $sql = "SELECT MAX(sales_id) AS sales_id FROM sales";
                             $result = mysqli_query($dbc, $sql);
                             $row = mysqli_fetch_assoc($result);
-                            foreach($quantity as $key=>$keyvalue){
-				if($keyvalue == 0){
-				continue;
+                            foreach($quantity as $key=>$keyvalue)
+							{
+								if($keyvalue == 0)
+								{
+								continue;
 }
-				$sql = "SELECT * FROM item WHERE item_id = $key";
-				$result = mysqli_query($dbc, $sql);
-				$row2 = mysqli_fetch_assoc($result);
-                            $sql = "INSERT INTO sales_item(sales_id, item_id, quantity, quantity_price) VALUES('".$row['sales_id']."', '$key', '$keyvalue', '$keyvalue' * '$row2[item_price]')";
-            			mysqli_query($dbc, $sql);
-				$sql = "UPDATE `item` SET item_stock = item_stock - '$keyvalue' WHERE item_id='$key'";
-				mysqli_query($dbc, $sql);
-                            }
-						}
-						else{
+								$sql = "SELECT * FROM item WHERE item_id = $key";
+								$result = mysqli_query($dbc, $sql);
+								$row2 = mysqli_fetch_assoc($result);
+								$sql = "INSERT INTO sales_item(sales_id, item_id, quantity, quantity_price) VALUES('".$row['sales_id']."', '$key', '$keyvalue', '$keyvalue' * '$row2[item_price]')";
+            					mysqli_query($dbc, $sql);
+								$sql = "UPDATE `item` SET item_stock = item_stock - '$keyvalue' WHERE item_id='$key'";
+								mysqli_query($dbc, $sql);
+								}
+							}
+						else
+						{
 							$affected_rows=0;
 						}			
 					

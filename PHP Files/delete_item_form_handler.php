@@ -50,7 +50,6 @@
 					else
 					{
 						echo "Submit Error";
-						echo mysqli_error();
 						header("location: view_item.php?msg=failed_delete");
 
 					}
